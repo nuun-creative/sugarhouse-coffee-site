@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sugar House Coffee | Enjoy Coffee. Eat Local. Be Kind.</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FDFBF7;
+    --espresso: #2C1810;
+    --latte: #C4A882;
+    --caramel: #D4956A;
+    --sage: #8B9E7E;
+    --sage-light: #C5D1B8;
+    --terracotta: #C0704A;
+    --plum: #6B3A5D;
+    --sky: #7EAAC4;
+    --blush: #E8C4B8;
+    --rainbow-1: #E25B45;
+    --rainbow-2: #F5A623;
+    --rainbow-3: #F8E71C;
+    --rainbow-4: #7ED321;
+    --rainbow-5: #4A90D9;
+    --rainbow-6: #9B59B6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--warm-white);
+    color: var(--espresso);
+    overflow-x: hidden;
+  }
+
+  /* ═══════════════════ NAV ═══════════════════ */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
+  }
+
+  nav.scrolled {
+    background: rgba(245, 240, 232, 0.92);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 2px 20px rgba(44, 24, 16, 0.08);
+  }
+
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    color: var(--espresso);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+
+  nav.scrolled .nav-logo { color: var(--espresso); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--espresso);
+    font-size: 0.9rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--terracotta);
+    transition: width 0.3s;
+  }
+
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-order {
+    background: var(--espresso) !important;
+    color: var(--cream) !important;
+    padding: 0.6rem 1.4rem;
+    border-radius: 100px;
+    font-weight: 500;
+    transition: transform 0.3s, box-shadow 0.3s !important;
+  }
+
+  .nav-order::after { display: none !important; }
+  .nav-order:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(44, 24, 16, 0.2); }
+
+  .mobile-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  .mobile-toggle span {
+    width: 24px;
+    height: 2px;
+    background: var(--espresso);
+    transition: all 0.3s;
+  }
+
+  /* ═══════════════════ HERO ═══════════════════ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: var(--cream);
+    overflow: hidden;
+  }
+
+  .hero-texture {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(139, 158, 126, 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 30%, rgba(212, 149, 106, 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(107, 58, 93, 0.08) 0%, transparent 50%);
+  }
+
+  .hero-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    background-size: 200px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem;
+    max-width: 800px;
+  }
+
+  .hero-tagline {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    color: var(--terracotta);
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 0.95;
+    color: var(--espresso);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--terracotta);
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: rgba(44, 24, 16, 0.7);
+    max-width: 500px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.6;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.7s forwards;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s forwards;
+  }
+
+  .btn-primary {
+    background: var(--espresso);
+    color: var(--cream);
+    padding: 0.9rem 2.2rem;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(44, 24, 16, 0.2);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--espresso);
+    padding: 0.9rem 2.2rem;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border: 1.5px solid rgba(44, 24, 16, 0.25);
+    transition: all 0.3s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--espresso);
+    background: rgba(44, 24, 16, 0.04);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.2s forwards;
+  }
+
+  .hero-scroll span {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(44, 24, 16, 0.4);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: rgba(44, 24, 16, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--terracotta);
+    animation: scrollDown 2s infinite;
+  }
+
+  /* ═══════════════════ RAINBOW DIVIDER ═══════════════════ */
+  .rainbow-bar {
+    height: 4px;
+    display: flex;
+  }
+
+  .rainbow-bar div {
+    flex: 1;
+    transition: flex 0.4s;
+  }
+
+  .rainbow-bar:hover div:nth-child(odd) { flex: 1.5; }
+
+  /* ═══════════════════ MISSION / ABOUT ═══════════════════ */
+  .mission {
+    padding: 6rem 2rem;
+    background: var(--warm-white);
+  }
+
+  .mission-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .mission-text h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .mission-text h2 em { color: var(--sage); font-style: italic; }
+
+  .mission-text p {
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(44, 24, 16, 0.75);
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+  }
+
+  .mission-quote {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    color: var(--terracotta);
+    margin-top: 1.5rem;
+    line-height: 1.4;
+  }
+
+  .mission-visual {
+    position: relative;
+  }
+
+  .mission-card {
+    background: var(--cream);
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mission-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--rainbow-1), var(--rainbow-2), var(--rainbow-3), var(--rainbow-4), var(--rainbow-5), var(--rainbow-6));
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .value-item {
+    text-align: center;
+    padding: 1.2rem;
+    border-radius: 12px;
+    background: var(--warm-white);
+    transition: transform 0.3s;
+  }
+
+  .value-item:hover { transform: translateY(-4px); }
+
+  .value-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .value-label {
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+  }
+
+  /* ═══════════════════ MENU HIGHLIGHTS ═══════════════════ */
+  .menu {
+    padding: 6rem 2rem;
+    background: var(--espresso);
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .menu::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(192, 112, 74, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 70%, rgba(107, 58, 93, 0.1) 0%, transparent 50%);
+  }
+
+  .menu-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .section-label {
+    font-family: 'Caveat', cursive;
+    font-size: 1.2rem;
+    color: var(--caramel);
+    margin-bottom: 0.5rem;
+  }
+
+  .menu h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 0.75rem;
+  }
+
+  .menu-intro {
+    font-weight: 300;
+    opacity: 0.7;
+    max-width: 500px;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+  }
+
+  .menu-categories {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .menu-cat-btn {
+    padding: 0.6rem 1.4rem;
+    border-radius: 100px;
+    border: 1.5px solid rgba(245, 240, 232, 0.2);
+    background: transparent;
+    color: var(--cream);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 400;
+  }
+
+  .menu-cat-btn.active,
+  .menu-cat-btn:hover {
+    background: var(--cream);
+    color: var(--espresso);
+    border-color: var(--cream);
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .menu-item {
+    background: rgba(245, 240, 232, 0.06);
+    border: 1px solid rgba(245, 240, 232, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+    cursor: default;
+    backdrop-filter: blur(4px);
+  }
+
+  .menu-item:hover {
+    background: rgba(245, 240, 232, 0.1);
+    border-color: rgba(245, 240, 232, 0.2);
+    transform: translateY(-4px);
+  }
+
+  .menu-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+  }
+
+  .menu-item-name {
+    font-weight: 500;
+    font-size: 1.05rem;
+  }
+
+  .menu-item-price {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    color: var(--caramel);
+    white-space: nowrap;
+    margin-left: 1rem;
+  }
+
+  .menu-item-desc {
+    font-weight: 300;
+    font-size: 0.88rem;
+    opacity: 0.6;
+    line-height: 1.5;
+  }
+
+  .menu-item-tags {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+
+  .tag-local {
+    background: rgba(139, 158, 126, 0.2);
+    color: var(--sage-light);
+  }
+
+  .tag-vegan {
+    background: rgba(126, 170, 196, 0.2);
+    color: var(--sky);
+  }
+
+  .tag-signature {
+    background: rgba(212, 149, 106, 0.2);
+    color: var(--caramel);
+  }
+
+  .tag-gf {
+    background: rgba(232, 196, 184, 0.2);
+    color: var(--blush);
+  }
+
+  .menu-footer {
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .btn-outline-light {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 2.2rem;
+    border-radius: 100px;
+    border: 1.5px solid rgba(245, 240, 232, 0.3);
+    color: var(--cream);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+
+  .btn-outline-light:hover {
+    background: var(--cream);
+    color: var(--espresso);
+  }
+
+  /* ═══════════════════ COMMUNITY ═══════════════════ */
+  .community {
+    padding: 6rem 2rem;
+    background: var(--warm-white);
+  }
+
+  .community-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .community h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .community h2 em { color: var(--plum); font-style: italic; }
+
+  .community-intro {
+    font-weight: 300;
+    color: rgba(44, 24, 16, 0.65);
+    max-width: 550px;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+    font-size: 1.05rem;
+  }
+
+  .community-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .comm-card {
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .comm-card:hover { transform: translateY(-6px); }
+
+  .comm-card-1 {
+    background: linear-gradient(135deg, #F0E6D8, #E8D5C4);
+    grid-row: span 2;
+  }
+
+  .comm-card-2 {
+    background: linear-gradient(135deg, var(--sage-light), #A8BD9A);
+  }
+
+  .comm-card-3 {
+    background: linear-gradient(135deg, #E0CDE0, #D4B5D4);
+  }
+
+  .comm-card-4 {
+    background: linear-gradient(135deg, var(--blush), #D4A896);
+    grid-column: span 2;
+  }
+
+  .comm-card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .comm-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--espresso);
+  }
+
+  .comm-card p {
+    font-weight: 300;
+    font-size: 0.92rem;
+    color: rgba(44, 24, 16, 0.7);
+    line-height: 1.5;
+  }
+
+  /* ═══════════════════ HOURS & LOCATION ═══════════════════ */
+  .info {
+    padding: 6rem 2rem;
+    background: var(--cream);
+    position: relative;
+  }
+
+  .info-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .info h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    margin-bottom: 2rem;
+  }
+
+  .hours-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .hours-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(44, 24, 16, 0.08);
+  }
+
+  .hours-day {
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+
+  .hours-time {
+    font-weight: 300;
+    color: rgba(44, 24, 16, 0.6);
+  }
+
+  .hours-today {
+    background: rgba(139, 158, 126, 0.12);
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+    border-bottom: none;
+  }
+
+  .hours-today .hours-day::after {
+    content: ' · today';
+    font-family: 'Caveat', cursive;
+    color: var(--sage);
+    font-size: 1rem;
+  }
+
+  .location-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .location-address {
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .location-address strong {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .location-map {
+    width: 100%;
+    height: 250px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #ddd;
+    position: relative;
+  }
+
+  .location-map iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    filter: saturate(0.7) contrast(1.05);
+  }
+
+  .location-contact {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 100px;
+    background: var(--warm-white);
+    text-decoration: none;
+    color: var(--espresso);
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    font-weight: 400;
+  }
+
+  .contact-pill:hover {
+    background: var(--espresso);
+    color: var(--cream);
+  }
+
+  /* ═══════════════════ FOOTER ═══════════════════ */
+  footer {
+    background: var(--espresso);
+    color: var(--cream);
+    padding: 4rem 2rem 2rem;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .footer-brand {
+    max-width: 350px;
+  }
+
+  .footer-brand h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-brand p {
+    font-weight: 300;
+    opacity: 0.6;
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .social-link {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(245, 240, 232, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--cream);
+    font-size: 0.85rem;
+    transition: all 0.3s;
+    font-weight: 500;
+  }
+
+  .social-link:hover {
+    background: var(--cream);
+    color: var(--espresso);
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(245, 240, 232, 0.1);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-bottom p {
+    font-weight: 300;
+    opacity: 0.4;
+    font-size: 0.85rem;
+  }
+
+  .footer-rainbow {
+    display: flex;
+    gap: 4px;
+  }
+
+  .footer-rainbow span {
+    width: 18px;
+    height: 3px;
+    border-radius: 2px;
+  }
+
+  /* ═══════════════════ ANIMATIONS ═══════════════════ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollDown {
+    0% { top: -100%; }
+    100% { top: 100%; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ═══════════════════ MOBILE ═══════════════════ */
+  @media (max-width: 768px) {
+    .mobile-toggle { display: flex; }
+
+    .nav-links {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 280px;
+      height: 100vh;
+      background: var(--cream);
+      flex-direction: column;
+      padding: 5rem 2rem 2rem;
+      gap: 1.5rem;
+      transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: -8px 0 30px rgba(0,0,0,0.1);
+    }
+
+    .nav-links.open { right: 0; }
+
+    .mission-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .community-cards { grid-template-columns: 1fr; }
+    .comm-card-1 { grid-row: auto; }
+    .comm-card-4 { grid-column: auto; }
+    .info-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-top { flex-direction: column; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-title { font-size: 2.5rem; }
+    .menu-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Sugar House Coffee</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#community">Community</a></li>
+    <li><a href="#visit">Visit</a></li>
+    <li><a href="https://www.sugarhousecoffee.com/" class="nav-order" target="_blank">Order Online</a></li>
+  </ul>
+  <div class="mobile-toggle" id="mobileToggle" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero">
+  <div class="hero-texture"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-content">
+    <p class="hero-tagline">Est. 2002 · Sugar House, Salt Lake City</p>
+    <h1 class="hero-title">Enjoy Coffee.<br>Eat Local.<br><em>Be Kind.</em></h1>
+    <p class="hero-subtitle">A gathering space where everyone is safe to share their story. Locally roasted coffee, fresh food & good people since 2002.</p>
+    <div class="hero-ctas">
+      <a href="https://www.sugarhousecoffee.com/" class="btn-primary" target="_blank">
+        Order Online
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#menu" class="btn-secondary">Explore the Menu</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- Rainbow divider -->
+<div class="rainbow-bar">
+  <div style="background: var(--rainbow-1)"></div>
+  <div style="background: var(--rainbow-2)"></div>
+  <div style="background: var(--rainbow-3)"></div>
+  <div style="background: var(--rainbow-4)"></div>
+  <div style="background: var(--rainbow-5)"></div>
+  <div style="background: var(--rainbow-6)"></div>
+</div>
+
+<!-- ═══════════════════ ABOUT / MISSION ═══════════════════ -->
+<section class="mission" id="about">
+  <div class="mission-inner">
+    <div class="mission-text reveal">
+      <p class="section-label">Our Story</p>
+      <h2>More than coffee.<br>This is <em>community.</em></h2>
+      <p>Sugar House Coffee has been the heart of the Sugar House neighborhood since 2002. Founded by Bob Evans and carried forward by his family, we're a gathering place where the door is open to everyone — no exceptions.</p>
+      <p>We locally source our ingredients because supporting our neighbors matters. Our beans are roasted right here in Salt Lake City by Rimini Coffee, our bread comes from Stoneground Bakery, and our pastries are baked by local artisans.</p>
+      <p class="mission-quote">"The community will be there for me and carry me when I can't do it alone."<br>— Emily Potts, Owner</p>
+    </div>
+    <div class="mission-visual reveal">
+      <div class="mission-card">
+        <div class="values-grid">
+          <div class="value-item">
+            <span class="value-icon">☕</span>
+            <span class="value-label">Locally Roasted</span>
+          </div>
+          <div class="value-item">
+            <span class="value-icon">🌱</span>
+            <span class="value-label">Locally Sourced</span>
+          </div>
+          <div class="value-item">
+            <span class="value-icon">🏳️‍🌈</span>
+            <span class="value-label">All Welcome</span>
+          </div>
+          <div class="value-item">
+            <span class="value-icon">🎨</span>
+            <span class="value-label">Supporting Artists</span>
+          </div>
+          <div class="value-item">
+            <span class="value-icon">🎵</span>
+            <span class="value-label">Live Music</span>
+          </div>
+          <div class="value-item">
+            <span class="value-icon">🐕</span>
+            <span class="value-label">Dog Friendly</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ MENU ═══════════════════ -->
+<section class="menu" id="menu">
+  <div class="menu-inner">
+    <div class="reveal">
+      <p class="section-label">What's Brewing</p>
+      <h2>Our Menu</h2>
+      <p class="menu-intro">From our signature espresso drinks to fresh-made food, everything is crafted with care and sourced with intention.</p>
+    </div>
+
+    <div class="menu-categories reveal">
+      <button class="menu-cat-btn active" onclick="filterMenu('all')">All Favorites</button>
+      <button class="menu-cat-btn" onclick="filterMenu('coffee')">Coffee & Espresso</button>
+      <button class="menu-cat-btn" onclick="filterMenu('signature')">Signature Drinks</button>
+      <button class="menu-cat-btn" onclick="filterMenu('food')">Food & Treats</button>
+      <button class="menu-cat-btn" onclick="filterMenu('fresh')">Fresh & Juiced</button>
+    </div>
+
+    <div class="menu-grid reveal" id="menuGrid">
+      <!-- Coffee -->
+      <div class="menu-item" data-cat="coffee">
+        <div class="menu-item-header">
+          <span class="menu-item-name">Freshly Brewed Rimini Coffee</span>
+        </div>
+        <p class="menu-item-desc">Our house coffee, locally roasted just miles away. Rich, smooth, and the reason regulars keep coming back.</p>
+        <div class="menu-item-tags">
+          <span class="tag tag-local">Local</span>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="coffee">
+        <div class="menu-item-header">
+          <span class="menu-item-name">Latte & Cappuccino</span>
+        </div>
+        <p class="menu-item-desc">Classic espresso drinks made with locally roasted Rimini beans. Ask about our seasonal flavors.</p>
+        <div class="menu-item-tags">
+          <span class="tag tag-local">Local</span>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="coffee">
+        <div class="menu-item-header">
+          <span class="menu-item-name">Mocha Latte</span>
+        </div>
+        <p class="menu-item-desc">Espresso meets rich chocolate for the perfect balance of bitter and sweet.</p>
+      </div>
+
+      <div class="menu-item" data-cat="signature">
+        <div class="menu-item-header">
+          <span class="menu-item-name">Cuban Revolver</span>
+        </div>
+        <p class="menu-item-desc">Six shots of espresso with brown sugar and vanilla. Not for the faint of heart — a customer legend.</p>
+        <div class="menu-item-tags">
+          <span class="tag tag-signature">Fan Favorite</span>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="signature">
+        <div class="menu-item-header">
+          <span class="menu-item-name">Karmel Sutra</span>
+        </div>
+        <p class="menu-item-desc">Caramel and white chocolate come together in this indulgent latte that's as fun as its name.</p>
+        <div class="menu-item-tags">
+          <span class="tag tag-signature">Signature</span>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="signature">
+        <div class="menu-item-header">
+          <span class="menu-item-name">Shang-Ra-Latte</span>
+        </div>
+        <p class="menu-item-desc">Amaretto, white chocolate, and chai mingle into something truly transcendent.</p>
+        <div class="menu-item-tags">
+          <span class="tag tag-signature">Signature</span>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="signature">
+        <div class="menu-item-header">
+          <span class="menu-item-name">Ladee-Dah-Tee</span>
+        </div>
+        <p class="menu-item-desc">Almond, macadamia nut, and cinnamon in a warming latte that feels like a hug.</p>
+        <div class="menu-item-tags">
+          <span class="tag tag-signature">Signature</span>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="signature">
+        <div class="menu-item-header">
+          <span class="menu-item-name">Tiramisu Latte</span>
+        </div>
+        <p class="menu-item-desc">All the flavors of the classic Italian dessert in espresso form.</p>
+        <div class="menu-item-tags">
+          <span class="tag tag-signature">Signature</span>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="coffee">
+        <div class="menu-item-header">
+          <span class="menu-item-name">Chai Latte</span>
+        </div>
+        <p class="menu-item-desc">House-made chai with warming spices. A local favorite — some say it's the best in the city.</p>
+        <div class="menu-item-tags">
+          <span class="tag tag-local">Housemade</span>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="food">
+        <div class="menu-item-header">
+          <span class="menu-item-name">Breakfast Burrito</span>
+        </div>
+        <p class="menu-item-desc">A hearty start to the day, made fresh every morning with locally sourced ingredients.</p>
+        <div class="menu-item-tags">
+          <span class="tag tag-local">Local</span>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="food">
+        <div class="menu-item-header">
+          <span class="menu-item-name">Panini Sandwiches</span>
+        </div>
+        <p class="menu-item-desc">Gourmet grilled paninis on Stoneground bread. Warm, crispy, and made with love.</p>
+        <div class="menu-item-tags">
+          <span class="tag tag-local">Stoneground Bread</span>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="food">
+        <div class="menu-item-header">
+          <span class="menu-item-name">Vegan Chili</span>
+        </div>
+        <p class="menu-item-desc">Our house-made vegan chili. Hearty, flavorful, and perfect on a cold SLC day.</p>
+        <div class="menu-item-tags">
+          <span class="tag tag-vegan">Vegan</span>
+          <span class="tag tag-local">Housemade</span>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="food">
+        <div class="menu-item-header">
+          <span class="menu-item-name">Local Pastries & Baked Goods</span>
+        </div>
+        <p class="menu-item-desc">Fresh daily from local bakeries. Rotating selection of muffins, croissants, quiche, and bread pudding.</p>
+        <div class="menu-item-tags">
+          <span class="tag tag-local">Local Bakers</span>
+          <span class="tag tag-gf">GF Options</span>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="food">
+        <div class="menu-item-header">
+          <span class="menu-item-name">Açaí Bowl</span>
+        </div>
+        <p class="menu-item-desc">A refreshing bowl of blended açaí topped with fresh fruit and granola.</p>
+        <div class="menu-item-tags">
+          <span class="tag tag-vegan">Vegan</span>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="fresh">
+        <div class="menu-item-header">
+          <span class="menu-item-name">Fresh Squeezed Mint Lemonade</span>
+        </div>
+        <p class="menu-item-desc">Made in-house with real lemons and fresh mint. Sunshine in a glass.</p>
+        <div class="menu-item-tags">
+          <span class="tag tag-local">Housemade</span>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="fresh">
+        <div class="menu-item-header">
+          <span class="menu-item-name">Iced Mango Tea</span>
+        </div>
+        <p class="menu-item-desc">Sweet, tropical, and refreshing. A perfect SLC summer companion.</p>
+      </div>
+
+      <div class="menu-item" data-cat="fresh">
+        <div class="menu-item-header">
+          <span class="menu-item-name">Fresh Juice & Smoothies</span>
+        </div>
+        <p class="menu-item-desc">Made fresh daily with real fruit. Nourishing and delicious.</p>
+        <div class="menu-item-tags">
+          <span class="tag tag-vegan">Vegan</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-footer reveal">
+      <a href="https://www.sugarhousecoffee.com/" class="btn-outline-light" target="_blank">
+        View Full Menu & Order
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Rainbow divider -->
+<div class="rainbow-bar">
+  <div style="background: var(--rainbow-6)"></div>
+  <div style="background: var(--rainbow-5)"></div>
+  <div style="background: var(--rainbow-4)"></div>
+  <div style="background: var(--rainbow-3)"></div>
+  <div style="background: var(--rainbow-2)"></div>
+  <div style="background: var(--rainbow-1)"></div>
+</div>
+
+<!-- ═══════════════════ COMMUNITY ═══════════════════ -->
+<section class="community" id="community">
+  <div class="community-inner">
+    <div class="reveal">
+      <p class="section-label">More Than a Coffee Shop</p>
+      <h2>Rooted in <em>Community</em></h2>
+      <p class="community-intro">We believe a coffee shop should give back as much as it serves. Here's how we show up for Sugar House.</p>
+    </div>
+
+    <div class="community-cards reveal">
+      <div class="comm-card comm-card-1">
+        <div class="comm-card-icon">🏳️‍🌈</div>
+        <h3>Safe Space for All</h3>
+        <p>As a proud member of the Utah LGBTQ+ Chamber of Commerce, we're committed to being a place where every person feels welcome, valued, and safe. We've hosted Fashion Fluid Closet — a free, gender-affirming clothing pop-up — and fly our rainbows proudly year-round.</p>
+      </div>
+
+      <div class="comm-card comm-card-2">
+        <div class="comm-card-icon">🎨</div>
+        <h3>Local Artists</h3>
+        <p>Our walls are a rotating gallery of local art. We sponsor the Sugar House Art Walk and give artists a platform to share their work.</p>
+      </div>
+
+      <div class="comm-card comm-card-3">
+        <div class="comm-card-icon">🎵</div>
+        <h3>Live Music & Open Mic</h3>
+        <p>Piano players, singer-songwriters, and open mic nights. Grab a latte and discover SLC's next great talent.</p>
+      </div>
+
+      <div class="comm-card comm-card-4">
+        <div class="comm-card-icon">🤝</div>
+        <h3>Supporting Local, Always</h3>
+        <p>Rimini Coffee roasts our beans. Stoneground bakes our bread. Local dairies supply our milk. When you buy here, you're supporting a whole network of Salt Lake small businesses. That's been our promise since day one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ VISIT ═══════════════════ -->
+<section class="info" id="visit">
+  <div class="info-inner">
+    <div class="reveal">
+      <h2>Hours</h2>
+      <div class="hours-grid" id="hoursGrid">
+        <div class="hours-row" data-day="1">
+          <span class="hours-day">Monday</span>
+          <span class="hours-time">7:00 AM – 9:00 PM</span>
+        </div>
+        <div class="hours-row" data-day="2">
+          <span class="hours-day">Tuesday</span>
+          <span class="hours-time">7:00 AM – 9:00 PM</span>
+        </div>
+        <div class="hours-row" data-day="3">
+          <span class="hours-day">Wednesday</span>
+          <span class="hours-time">7:00 AM – 9:00 PM</span>
+        </div>
+        <div class="hours-row" data-day="4">
+          <span class="hours-day">Thursday</span>
+          <span class="hours-time">7:00 AM – 9:00 PM</span>
+        </div>
+        <div class="hours-row" data-day="5">
+          <span class="hours-day">Friday</span>
+          <span class="hours-time">7:00 AM – 9:00 PM</span>
+        </div>
+        <div class="hours-row" data-day="6">
+          <span class="hours-day">Saturday</span>
+          <span class="hours-time">7:00 AM – 8:00 PM</span>
+        </div>
+        <div class="hours-row" data-day="0">
+          <span class="hours-day">Sunday</span>
+          <span class="hours-time">8:00 AM – 8:00 PM</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <h2>Find Us</h2>
+      <div class="location-details">
+        <div class="location-address">
+          <strong>Sugar House Coffee</strong>
+          2011 S 1100 E<br>
+          Salt Lake City, UT 84106
+        </div>
+
+        <div class="location-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.5!2d-111.8545!3d40.7225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8752f50d3e73d001%3A0x55bd6cdc7a5f4d0!2sSugar+House+Coffee!5e0!3m2!1sen!2sus!4v1"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+
+        <div class="location-contact">
+          <a href="tel:8018930458" class="contact-pill">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            (801) 893-0458
+          </a>
+          <a href="https://instagram.com/sugarhousecoffee" class="contact-pill" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+            @sugarhousecoffee
+          </a>
+          <a href="https://www.sugarhousecoffee.com/" class="contact-pill" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+            Order Online
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Sugar House Coffee</h3>
+        <p>A public gathering space where everyone is safe to share their story. Serving the Sugar House neighborhood since 2002.</p>
+      </div>
+      <div class="footer-social">
+        <a href="https://instagram.com/sugarhousecoffee" class="social-link" target="_blank" aria-label="Instagram">IG</a>
+        <a href="https://facebook.com/sugarhousecoffee" class="social-link" target="_blank" aria-label="Facebook">FB</a>
+        <a href="https://www.yelp.com/biz/sugar-house-coffee-salt-lake-city" class="social-link" target="_blank" aria-label="Yelp">Y!</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Sugar House Coffee. All rights reserved.</p>
+      <div class="footer-rainbow">
+        <span style="background: var(--rainbow-1)"></span>
+        <span style="background: var(--rainbow-2)"></span>
+        <span style="background: var(--rainbow-3)"></span>
+        <span style="background: var(--rainbow-4)"></span>
+        <span style="background: var(--rainbow-5)"></span>
+        <span style="background: var(--rainbow-6)"></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Highlight today's hours
+  const today = new Date().getDay();
+  document.querySelectorAll('.hours-row').forEach(row => {
+    if (parseInt(row.dataset.day) === today) {
+      row.classList.add('hours-today');
+    }
+  });
+
+  // Menu filter
+  function filterMenu(cat) {
+    document.querySelectorAll('.menu-cat-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+
+    document.querySelectorAll('.menu-item').forEach(item => {
+      if (cat === 'all' || item.dataset.cat === cat) {
+        item.style.display = '';
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(12px)';
+        requestAnimationFrame(() => {
+          item.style.transition = 'opacity 0.4s, transform 0.4s';
+          item.style.opacity = '1';
+          item.style.transform = 'translateY(0)';
+        });
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Close mobile nav on link click
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
